@@ -1,0 +1,8 @@
+http://lenta.ru/index.html lenta.html
+http://rbc.ru/index.html   rbc.html
+http://lenta.ru/index.html lenta2.html
+http://rbc.ru/privacy.html   rbc.html
+http://qqqqqwe.com         qwe.html
+https://github.com/poetix/protonpack/archive/master.zip protonpack.zip
+https://github.com/corporateshark/WalCommander/archive/master.zip WalCommander.zip
+https://github.com/azzoti/get-rich-with-java8/archive/master.zip get-rich-with-java8.zip

@@ -1,0 +1,47 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+version = '1.0'
+
+ext {
+    JAVA_VERSION = '1.8'
+    httpAsyncVer = '4.0.2'
+    lombokVer = '1.14.8'
+}
+
+task validate {
+    def javaVer = System.getProperty('java.version')
+    if (!javaVer.startsWith(project.JAVA_VERSION)) {
+        println "*** ERROR: Java v${project.JAVA_VERSION} required ! (found Java ${javaVer})"
+        System.exit(1)
+    }
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = project.JAVA_VERSION
+    targetCompatibility = project.JAVA_VERSION
+}
+
+jar {
+   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+   manifest { attributes 'Main-Class': 'org.justvit.downloader.Main',
+                         'Implementation-Version': version,
+                         'Implementation-Title': 'Downloader'
+            }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.0'
+    compile 'commons-cli:commons-cli:1.2'
+    compile group:'org.apache.httpcomponents', name:'httpasyncclient', version : project.httpAsyncVer
+    compile group: 'org.projectlombok', name: 'lombok', version: project.lombokVer //TODO delete
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

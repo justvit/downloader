@@ -64,42 +64,7 @@ public class Main {
     public static final int DEFAULT_BUFFER_SIZE = 10 * MEGAS;
 
     public static void main(String[] args) {
-        final Options options = new Options();
-
-        final Option nThreadsOption = OptionBuilder.withLongOpt("nthreads")
-                .hasArg()
-                .withType(Integer.class)
-                .withDescription("Number of downloading threads")
-                .create('n');
-
-        final Option speedLimitOption = OptionBuilder.withLongOpt("speedlimit")
-                .hasArg()
-                .withType(String.class)
-                .withDescription("Upper limit of downloading speed (bytes per second)\nExamples: 1000, 100k, 5m")
-                .create('l');
-
-        final Option fileOption = OptionBuilder.withLongOpt("file")
-                .hasArg()
-                .isRequired()
-                .withType(String.class)
-                .withDescription("Path to a file with links to download")
-                .create('f');
-
-        final Option outputOption = OptionBuilder.withLongOpt("output")
-                .hasArg()
-                .withType(String.class)
-                .withDescription("Path to a folder for downloaded files to save")
-                .create('o');
-
-        final Option helpOption = OptionBuilder.withLongOpt("help")
-                .withDescription("This text")
-                .create('h');
-
-        options.addOption(nThreadsOption)
-               .addOption(speedLimitOption)
-               .addOption(fileOption)
-               .addOption(outputOption)
-               .addOption(helpOption);
+        final Options options = makeOptionsDeclaration();
 
         final HelpFormatter helpFormatter = new HelpFormatter();
 
@@ -332,4 +297,44 @@ public class Main {
                     delta, downloadedBytes.longValue());
         }
     } //-- def main(String[])
+
+    private static Options makeOptionsDeclaration() {
+        final Options options = new Options();
+
+        final Option nThreadsOption = OptionBuilder.withLongOpt("nthreads")
+                .hasArg()
+                .withType(Integer.class)
+                .withDescription("Number of downloading threads")
+                .create('n');
+
+        final Option speedLimitOption = OptionBuilder.withLongOpt("speedlimit")
+                .hasArg()
+                .withType(String.class)
+                .withDescription("Upper limit of downloading speed (bytes per second)\nExamples: 1000, 100k, 5m")
+                .create('l');
+
+        final Option fileOption = OptionBuilder.withLongOpt("file")
+                .hasArg()
+                .isRequired()
+                .withType(String.class)
+                .withDescription("Path to a file with links to download")
+                .create('f');
+
+        final Option outputOption = OptionBuilder.withLongOpt("output")
+                .hasArg()
+                .withType(String.class)
+                .withDescription("Path to a folder for downloaded files to save")
+                .create('o');
+
+        final Option helpOption = OptionBuilder.withLongOpt("help")
+                .withDescription("This text")
+                .create('h');
+
+        options.addOption(nThreadsOption)
+               .addOption(speedLimitOption)
+               .addOption(fileOption)
+               .addOption(outputOption)
+               .addOption(helpOption);
+        return options;
+    }
 }

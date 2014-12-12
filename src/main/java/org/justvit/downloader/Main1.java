@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 /**
  * A class with the main()
  */
-public class Main {
+public class Main1 {
     private static final Pattern NUMBER_REGEX = Pattern.compile("\\d+");
     private static final Pattern NUMBER_KM_REGEX = Pattern.compile("(\\d+)([KkMm]?)");
     public static final String CMDLINE_SYNTAX = "java -jar downloader.jar [OPTIONS]";
@@ -219,6 +219,7 @@ public class Main {
                 System.out.printf("DEBUG starting to download [%s] to file [%s]\n",
                                                      link, tempFilePath.toString());
 
+                //TODO retry downloading on error
                 httpClient.execute(request, context, new FutureCallback<HttpResponse>() {
                     @Override
                     public void completed(HttpResponse response) {
@@ -336,4 +337,6 @@ public class Main {
                .addOption(outputOption)
                .addOption(helpOption);
     }
+
 }
+

@@ -3,9 +3,7 @@ package org.justvit.downloader;
 import java.util.concurrent.TimeUnit;
 
 /**
- * User: vit
- * Date: 10/12/14
- * Time: 6:27 PM
+ *
  */
 public class FixedRateTokenBucket {
     private final long capacity;
@@ -23,28 +21,28 @@ public class FixedRateTokenBucket {
     public long consume(long quantity) {
         boolean slept = false;
         final long start = System.nanoTime();
-            while (!tryConsume(quantity)) {
-                sleep();
-                slept = true;
-            }
+        while (!tryConsume(quantity)) {
+            sleep();
+            slept = true;
+        }
         return slept ? System.nanoTime() - start : 0;
     }
 
     private synchronized boolean tryConsume(long quantity) {
-            if (nTokensInBucket >= quantity) {
-                nTokensInBucket -= quantity;
-                return true;
-            }
+        if (nTokensInBucket >= quantity) {
+            nTokensInBucket -= quantity;
+            return true;
+        }
 
-            nTokensInBucket += Math.min(capacity, refill());
-            return false;
+        nTokensInBucket += Math.min(capacity, refill());
+        return false;
     }
 
     private long refill() {
         final long now = System.nanoTime();
-        if (now < refillTime)
+        if (now < refillTime) {
             return 0;
-        else {
+        } else {
             refillTime = now + period;
             return tokenRate;
         }
